@@ -40,10 +40,13 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
 {
-    DotNetCoreMSBuild("./src/zubenet.common.sln", new DotNetCoreMSBuildSettings()
+    var settings = new DotNetCoreMSBuildSettings()
     {
         ArgumentCustomization = args => args.Append("/p:SemVer=" + versionInfo.NuGetVersionV2)
-    });
+    };
+    settings.SetConfiguration(configuration);
+
+    DotNetCoreMSBuild("./src/zubenet.common.sln", settings);
 });
 
 Task("Test")
