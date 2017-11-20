@@ -1,6 +1,8 @@
 assembly-versioning-scheme: MajorMinorPatch
 mode: ContinuousDeployment
 next-version: 1.0.1
-branches: {}
+branches: 
+  master:
+    tag: beta
 ignore:
   sha: []
