@@ -1,27 +1,22 @@
-version: 1.0.{build}
-image: Visual Studio 2017
+install:
+  - choco install gitversion.portable -pre -y
+
 assembly_info:
-  patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
-nuget:
-  account_feed: true
-  project_feed: true
+  patch: false
+
+image: Visual Studio 2017
+
 before_build:
-- ps: nuget restore src\zubenet.common.sln
-build:
-  project: src\zubenet.common.sln
-  publish_nuget: true
-  publish_nuget_symbols: true
-  include_nuget_references: true
-  verbosity: minimal
+- ps: dotnet restore src\zubenet.common.sln
+- ps: gitversion /l console /output buildserver /updateAssemblyInfo
+
+build_script:
+  - ps: .\build.ps1
+
+artifacts:
+- path: .\artifacts\*.nupkg
+
+# after_build:
+#   - cmd: ECHO nuget pack <Project>\<NuSpec>.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+#   - cmd: nuget pack <Project>\<NuSpec>.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+#   - cmd: appveyor PushArtifact "<NuSpec>.%GitVersion_NuGetVersion%.nupkg"
