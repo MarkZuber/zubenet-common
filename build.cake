@@ -1,5 +1,7 @@
 #tool "nuget:?package=GitVersion.CommandLine"
 
+GitVersion versionInfo = null;
+
 var target = Argument("target", "Default");
 
 // 1. If command line parameter parameter passed, use that.
@@ -7,18 +9,6 @@ var target = Argument("target", "Default");
 var configuration =
     HasArgument("Configuration") ? Argument<string>("Configuration") :
     EnvironmentVariable("Configuration") != null ? EnvironmentVariable("Configuration") : "Release";
-
-// The build number to use in the version number of the built NuGet packages.
-// There are multiple ways this value can be passed, this is a common pattern.
-// 1. If command line parameter parameter passed, use that.
-// 2. Otherwise if running on AppVeyor, get it's build number.
-// 3. Otherwise if running on Travis CI, get it's build number.
-// 4. Otherwise if an Environment variable exists, use that.
-// 5. Otherwise default the build number to 0.
-var buildNumber =
-    HasArgument("BuildNumber") ? Argument<int>("BuildNumber") :
-    AppVeyor.IsRunningOnAppVeyor ? AppVeyor.Environment.Build.Number :
-    EnvironmentVariable("BuildNumber") != null ? int.Parse(EnvironmentVariable("BuildNumber")) : 0;
 
 // A directory path to an Artifacts directory.
 var artifactsDirectory = Directory("./Artifacts");
@@ -29,8 +19,18 @@ Task("Clean")
     CleanDirectory(artifactsDirectory);
 });
 
-Task("Restore")
+Task("SetVersionInfo")
     .IsDependentOn("Clean")
+    .Does(() =>
+{
+    versionInfo = GitVersion(new GitVersionSettings {
+        RepositoryPath = ".",
+        UpdateAssemblyInfo = true,
+    });
+});
+
+Task("Restore")
+    .IsDependentOn("SetVersionInfo")
     .Does(() =>
 {
     DotNetCoreRestore("./src/zubenet.common.sln");
@@ -40,32 +40,23 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
 {
-    var projects = GetFiles("./**/*.csproj");
-    foreach(var project in projects)
+    DotNetCoreMSBuild("./src/zubenet.common.sln", new DotNetCoreMSBuildSettings()
     {
-        DotNetCoreBuild(
-            project.GetDirectory().FullPath,
-            new DotNetCoreBuildSettings()
-            {
-                Configuration = configuration
-            });
-    }
+        ArgumentCustomization = args => args.Append("/p:SemVer=" + versionInfo.NuGetVersionV2)
+    });
 });
 
 Task("Test")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    var projects = GetFiles("./Tests/**/*.csproj");
+    var projects = GetFiles("./src/**/*.Tests.csproj");
     foreach(var project in projects)
     {
         DotNetCoreTest(
             project.GetDirectory().FullPath,
             new DotNetCoreTestSettings()
             {
-                ArgumentCustomization = args => args
-                    .Append("-xml")
-                    .Append(artifactsDirectory.Path.CombineWithFilePath(project.GetFilenameWithoutExtension()).FullPath + ".xml"),
                 Configuration = configuration,
                 NoBuild = true
             });
@@ -88,6 +79,7 @@ Task("Pack")
                 {
                     Configuration = configuration,
                     OutputDirectory = artifactsDirectory,
+                    ArgumentCustomization = args => args.Append("/p:PackageVersion=" + versionInfo.NuGetVersionV2)
                     // VersionSuffix = revision
                 });
         }
