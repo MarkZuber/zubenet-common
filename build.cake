@@ -79,7 +79,7 @@ Task("Pack")
     .IsDependentOn("Test")
     .Does(() =>
     {
-        var revision = "a" + buildNumber.ToString("D4");
+        // var revision = "a" + buildNumber.ToString("D4");
         foreach (var project in GetFiles("./src/**/*.csproj"))
         {
             DotNetCorePack(
@@ -88,7 +88,7 @@ Task("Pack")
                 {
                     Configuration = configuration,
                     OutputDirectory = artifactsDirectory,
-                    VersionSuffix = revision
+                    // VersionSuffix = revision
                 });
         }
     });
