@@ -17,6 +17,8 @@ dotnet_csproj:
 nuget:
   account_feed: true
   project_feed: true
+before_build:
+- ps: nuget restore src\zubenet.common.sln
 build:
   project: src\zubenet.common.sln
   publish_nuget: true
