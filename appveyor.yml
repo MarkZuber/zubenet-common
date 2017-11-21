@@ -13,6 +13,8 @@ before_build:
 environment:
   nuget_api_key:
     secure: l3HSwlDVK+wEMmgNl9qg8wBnwHs1Wr5n1AQohpuIq438BWicV0Coqvt4OQbjgkTs
+  myget_api_key:
+    secure: j/Q3Ej+QBPe9ly0F18AMMmva0PM5rDtypFWl4h8u92QrZyOVzwaVz7ScMZFb5a/r
 
 build_script:
   - ps: .\build.ps1

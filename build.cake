@@ -94,8 +94,10 @@ Task("Push")
     {
         if (AppVeyor.IsRunningOnAppVeyor) {
             var settings = new DotNetCoreNuGetPushSettings() {
-                Source = "https://www.nuget.org/",
-                ApiKey = EnvironmentVariable("nuget_api_key")
+                // Source = "https://www.nuget.org/",
+                // ApiKey = EnvironmentVariable("nuget_api_key")
+                Source = "https://www.myget.org/F/zubenet",
+                ApiKey = EnvironmentVariable("myget_api_key")
             };
             DotNetCoreNuGetPush(System.IO.Path.Combine(artifactsDirectory, "*.nupkg"), settings);
         }
