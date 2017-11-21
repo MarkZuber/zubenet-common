@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>Latest</LangVersion>
     <Authors>Mark Zuber (mark@zube.com)</Authors>
     <Company>Zube, Inc.</Company>
     <Product>ZubeNet</Product>
@@ -16,4 +17,24 @@
     <PackageReleaseNotes>...</PackageReleaseNotes>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
+    <PackageReference Include="CommandLineParser" Version="2.1.1-beta" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.Abstractions" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="NLog" Version="5.0.0-beta11" />
+    <PackageReference Include="NLog.Config" Version="4.5.0-alpha04" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0-rtm-beta5" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.4.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.0" />
+    <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.4.0" />
+    <PackageReference Include="System.Security.AccessControl" Version="4.4.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="8.6.0" />
+  </ItemGroup>  
+  
 </Project>
