@@ -97,7 +97,7 @@ Task("Push")
                 Source = "https://www.nuget.org/",
                 ApiKey = EnvironmentVariable("nuget_api_key")
             };
-            DotNetCoreNuGetPush(System.IO.Path.Combine(artifactsDirectory, "/*.nupkg"), settings);
+            DotNetCoreNuGetPush(artifactsDirectory, "*.nupkg"), settings);
         }
     });
 
