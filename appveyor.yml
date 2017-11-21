@@ -10,6 +10,10 @@ before_build:
 - ps: dotnet restore src\zubenet.common.sln
 - ps: gitversion /l console /output buildserver /updateAssemblyInfo /ensureassemblyinfo
 
+environment:
+  nuget_api_key:
+    secure: l3HSwlDVK+wEMmgNl9qg8wBnwHs1Wr5n1AQohpuIq438BWicV0Coqvt4OQbjgkTs
+
 build_script:
   - ps: .\build.ps1
 

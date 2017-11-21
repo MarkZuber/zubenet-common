@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Mark Zuber (mark@zube.com)</Authors>
+    <Company>Zube, Inc.</Company>
+    <Product>ZubeNet</Product>
+    <Description>ZubeNET common core code.</Description>
+    <Copyright></Copyright>
+    <PackageLicenseUrl>https://github.com/MarkZuber/zubenet-common/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/MarkZuber/zubenet-common</PackageProjectUrl>
+    <PackageIconUrl>iconurl</PackageIconUrl>
+    <RepositoryUrl>https://github.com/MarkZuber/zubenet-common</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>netcore</PackageTags>
+    <PackageReleaseNotes>...</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

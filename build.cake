@@ -88,7 +88,23 @@ Task("Pack")
         }
     });
 
-Task("Default")
-    .IsDependentOn("Pack");
+Task("Push")
+    .IsDependentOn("Pack")
+    .Does(() =>
+    {
+        if (AppVeyor.IsRunningOnAppVeyor) {
+            var settings = new DotNetCoreNuGetPushSettings() {
+                Source = "https://www.nuget.org/",
+                ApiKey = EnvironmentVariable("nuget_api_key")
+            };
+            DotNetCoreNuGetPush(System.IO.Path.Combine(artifactsDirectory, "/*.nupkg"), settings);
+        }
+    });
+
+if (AppVeyor.IsRunningOnAppVeyor) {
+    Task("Default").IsDependentOn("Push");
+} else {
+    Task("Default").IsDependentOn("Pack");
+}
 
 RunTarget(target);
