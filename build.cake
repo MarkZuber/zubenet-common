@@ -101,7 +101,7 @@ Task("Push")
             };
             DotNetCoreNuGetPush(System.IO.Path.Combine(artifactsDirectory, "*.nupkg"), settings);
         } else {
-            Information("We're not on AppVeyor with current branch == master, so not pushing packages...")
+            Information("We're not on AppVeyor with current branch == master, so not pushing packages...");
         }
     });
 
