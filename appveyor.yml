@@ -7,7 +7,6 @@ assembly_info:
 image: Visual Studio 2017
 
 before_build:
-- ps: dotnet restore src\zubenet.common.sln
 - ps: gitversion /l console /output buildserver
 
 environment:
