@@ -75,10 +75,8 @@ Task("Pack")
     .IsDependentOn("Test")
     .Does(() =>
     {
-        // var revision = "a" + buildNumber.ToString("D4");
         foreach (var project in GetFiles("./src/**/*.csproj"))
         {
-            Information(versionInfo.NuGetVersionV2);
             DotNetCorePack(
                 project.GetDirectory().FullPath,
                 new DotNetCorePackSettings()
@@ -86,7 +84,6 @@ Task("Pack")
                     Configuration = configuration,
                     OutputDirectory = artifactsDirectory,
                     ArgumentCustomization = args => args.Append("/p:PackageVersion=" + versionInfo.NuGetVersionV2)
-                    // VersionSuffix = revision
                 });
         }
     });

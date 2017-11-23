@@ -1,5 +1,6 @@
 <Project>
     <ItemGroup>
+        <Compile Include="..\GlobalAssemblyInfo.cs"/>
         <Compile Include="..\gen\GlobalAssemblyInfo.cs"/>
     </ItemGroup>
     <PropertyGroup>
