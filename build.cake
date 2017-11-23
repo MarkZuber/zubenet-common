@@ -92,7 +92,9 @@ Task("Push")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-        if (AppVeyor.IsRunningOnAppVeyor && AppVeyor.Environment.Repository.Branch == "master") {
+        if (AppVeyor.IsRunningOnAppVeyor && 
+            AppVeyor.Environment.Repository.Branch == "master" &&
+            EnvironmentVariable("APPVEYOR_PULL_REQUEST_NUMBER") == null) {
             var settings = new DotNetCoreNuGetPushSettings() {
                 // Source = "https://www.nuget.org/",
                 // ApiKey = EnvironmentVariable("nuget_api_key")
@@ -101,7 +103,7 @@ Task("Push")
             };
             DotNetCoreNuGetPush(System.IO.Path.Combine(artifactsDirectory, "*.nupkg"), settings);
         } else {
-            Information("We're not on AppVeyor with current branch == master, so not pushing packages...");
+            Information("We're not on AppVeyor with current branch == master, or we're a pull request so not pushing packages...");
         }
     });
 
