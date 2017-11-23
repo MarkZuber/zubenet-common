@@ -92,7 +92,7 @@ Task("Push")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-        if (AppVeyor.IsRunningOnAppVeyor) {
+        if (AppVeyor.IsRunningOnAppVeyor && AppVeyor.Environment.Repository.Branch == "master") {
             var settings = new DotNetCoreNuGetPushSettings() {
                 // Source = "https://www.nuget.org/",
                 // ApiKey = EnvironmentVariable("nuget_api_key")
