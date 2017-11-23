@@ -17,10 +17,6 @@
     <PackageReleaseNotes>...</PackageReleaseNotes>
   </PropertyGroup>
 
-  <PropertyGroup>
-      <Version>$(GitVersion_MajorMinorPatch)</Version>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />

@@ -1,0 +1,8 @@
+<Project>
+    <ItemGroup>
+        <Compile Include="..\gen\GlobalAssemblyInfo.cs"/>
+    </ItemGroup>
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+</Project>

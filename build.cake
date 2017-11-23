@@ -26,6 +26,8 @@ Task("SetVersionInfo")
     versionInfo = GitVersion(new GitVersionSettings {
         RepositoryPath = ".",
         UpdateAssemblyInfo = true,
+        UpdateAssemblyInfoFilePath = "./src/gen/GlobalAssemblyInfo.cs",
+        ArgumentCustomization = args => args.Append("/ensureAssemblyInfo")
     });
 });
 
@@ -76,6 +78,7 @@ Task("Pack")
         // var revision = "a" + buildNumber.ToString("D4");
         foreach (var project in GetFiles("./src/**/*.csproj"))
         {
+            Information(versionInfo.NuGetVersionV2);
             DotNetCorePack(
                 project.GetDirectory().FullPath,
                 new DotNetCorePackSettings()
